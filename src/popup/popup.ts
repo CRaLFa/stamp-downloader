@@ -30,12 +30,12 @@ const getProductId = (tab: chrome.tabs.Tab) => {
 
 const fetchImages = async (urls: string[]) => {
   const images = await Promise.all(urls.map(async (url) => {
-    const res = await fetch(url);
-    if (!res.ok || res.status !== 200) {
-      return null;
-    }
     const arr = reImageId.exec(url);
     if (!arr) {
+      return null;
+    }
+    const res = await fetch(url);
+    if (!res.ok || res.status !== 200) {
       return null;
     }
     return <StampImage> {
@@ -46,10 +46,10 @@ const fetchImages = async (urls: string[]) => {
   return images.filter((i) => !!i);
 };
 
-const zipImages = async (images: StampImage[]) => {
+const zipImages = (images: StampImage[]) => {
   const zip = new JSZip();
   images.forEach((img) => zip.file(`${img.id}.png`, img.blob));
-  return await zip.generateAsync({ type: 'blob' });
+  return zip.generateAsync({ type: 'blob' });
 };
 
 const downloadZip = (zip: Blob, name: string) => {

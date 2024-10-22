@@ -14,9 +14,7 @@ const manifest = defineManifest({
   content_scripts: [
     {
       js: ['src/content.ts'],
-      matches: [
-        'https://store.line.me/stickershop/product/*',
-      ],
+      matches: ['https://store.line.me/stickershop/product/*'],
     },
   ],
   permissions: ['activeTab'],

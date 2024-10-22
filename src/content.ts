@@ -5,15 +5,12 @@ const getImageUrls = () => {
   const urls = [...spans].map((span) => {
     const bgImage = span.attributeStyleMap.get('background-image');
     if (!bgImage) {
-      return undefined;
+      return null;
     }
     const arr = reUrl.exec(bgImage.toString());
-    if (!arr) {
-      return undefined;
-    }
-    return arr[1];
+    return arr ? arr[1] : null;
   });
-  return urls.filter((url) => url !== undefined);
+  return urls.filter((url) => !!url);
 };
 
 chrome.runtime.onMessage.addListener((_msg, _sender, sendResponse) => {
