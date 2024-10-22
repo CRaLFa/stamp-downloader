@@ -61,10 +61,19 @@ const downloadZip = (zip: Blob, name: string) => {
   a.click();
 };
 
-document.querySelector<HTMLButtonElement>('#download')!.addEventListener('click', async () => {
-  const tab = await getCurrentTab();
-  const imageUrls = await chrome.tabs.sendMessage<any, string[]>(tab.id!, null);
-  const images = await fetchImages(imageUrls);
-  const zip = await zipImages(images);
-  downloadZip(zip, `${getProductId(tab)}.zip`);
-});
+(async () => {
+  const dlButton = document.querySelector<HTMLButtonElement>('#download')!;
+  const currentTab = await getCurrentTab();
+
+  dlButton.addEventListener('click', async () => {
+    const productId = getProductId(currentTab);
+    const imageUrls = await chrome.tabs.sendMessage<any, string[]>(currentTab.id!, null);
+    const images = await fetchImages(imageUrls);
+    const zip = await zipImages(images);
+    downloadZip(zip, `${productId}.zip`);
+  });
+
+  if (!currentTab.url || !currentTab.url.startsWith('https://store.line.me/stickershop/product/')) {
+    dlButton.disabled = true;
+  }
+})();
