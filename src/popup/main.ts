@@ -6,8 +6,10 @@ type StampImage = {
   blob: Blob;
 };
 
-const reProductId = /product\/(\d+)/;
-const reImageId = /sticker\/(\d+)/;
+const PRODUCT_URL = 'https://store.line.me/stickershop/product/';
+
+const RE_PRODUCT_ID = /product\/(\d+)/;
+const RE_IMAGE_ID = /sticker\/(\d+)/;
 
 const getCurrentTab = async () => {
   const tabs = await chrome.tabs.query({
@@ -21,7 +23,7 @@ const getProductId = (tab: chrome.tabs.Tab) => {
   if (!tab.url) {
     throw new Error('Failed to get tab URL');
   }
-  const arr = reProductId.exec(tab.url);
+  const arr = RE_PRODUCT_ID.exec(tab.url);
   if (!arr) {
     throw new Error('Failed to get product ID');
   }
@@ -30,7 +32,7 @@ const getProductId = (tab: chrome.tabs.Tab) => {
 
 const fetchImages = async (urls: string[]) => {
   const images = await Promise.all(urls.map(async (url) => {
-    const arr = reImageId.exec(url);
+    const arr = RE_IMAGE_ID.exec(url);
     if (!arr) {
       return null;
     }
@@ -66,14 +68,19 @@ const downloadZip = (zip: Blob, name: string) => {
   const currentTab = await getCurrentTab();
 
   dlButton.addEventListener('click', async () => {
-    const productId = getProductId(currentTab);
-    const imageUrls = await chrome.tabs.sendMessage<any, string[]>(currentTab.id!, null);
-    const images = await fetchImages(imageUrls);
-    const zip = await zipImages(images);
-    downloadZip(zip, `${productId}.zip`);
+    try {
+      const productId = getProductId(currentTab);
+      const imageUrls = await chrome.tabs.sendMessage<any, string[]>(currentTab.id!, null);
+      const images = await fetchImages(imageUrls);
+      const zip = await zipImages(images);
+      downloadZip(zip, `${productId}.zip`);
+    } catch (err) {
+      // console.error(err);
+      window.alert('ダウンロードに失敗しました。\nページを再読み込みしてから再度お試しください。');
+    }
   });
 
-  if (!currentTab.url || !currentTab.url.startsWith('https://store.line.me/stickershop/product/')) {
+  if (!currentTab.url || !currentTab.url.startsWith(PRODUCT_URL)) {
     dlButton.disabled = true;
   }
 })();
