@@ -1,6 +1,6 @@
 # stamp-downloader
 
-Chrome extension for downloading LINE stamp images
+Chrome extension for downloading stamp images from [LINE STORE](https://store.line.me/)
 
 ## Build
 
