@@ -9,7 +9,7 @@ const manifest = defineManifest({
   icons: {},
   action: {
     default_icon: {},
-    default_popup: 'src/popup/index.html',
+    default_popup: 'popup.html',
   },
   content_scripts: [
     {
