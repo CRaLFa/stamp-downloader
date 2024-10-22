@@ -6,9 +6,13 @@ const manifest = defineManifest({
   name: 'Stamp Downloader',
   version: '0.0.1',
   description: 'Download LINE stamp images',
-  icons: {},
+  icons: {
+    64: 'res/icon-64.png',
+  },
   action: {
-    default_icon: {},
+    default_icon: {
+      64: 'res/icon-64.png',
+    },
     default_popup: 'popup.html',
   },
   content_scripts: [
