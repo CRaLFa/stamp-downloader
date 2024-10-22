@@ -43,7 +43,7 @@ const fetchImages = async (urls: string[]) => {
       blob: await res.blob(),
     };
   }));
-  return images.filter((i) => !!i);
+  return images.filter((img) => img !== null);
 };
 
 const zipImages = (images: StampImage[]) => {

@@ -12,6 +12,7 @@ main () {
 	local zip_name="stamp-downloader-${version}.zip"
 	(cd dist/ && zip -r "../$zip_name" .)
 	gh release create "v${version}" "$zip_name" --generate-notes
+	rm "$zip_name"
 }
 
 main "$@"
