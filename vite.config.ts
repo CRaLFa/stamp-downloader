@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 const manifest = defineManifest({
   manifest_version: 3,
   name: 'LINEスタンプダウンローダー',
-  version: '0.1.0',
+  version: '0.1.1',
   description: 'LINE STORE からスタンプ画像を一括ダウンロードする Chrome 拡張機能です。',
   icons: {
     64: 'res/icon-64.png',
