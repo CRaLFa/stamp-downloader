@@ -1,7 +1,7 @@
 {
   "name": "stamp-downloader",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.0-beta.26",
+    "@crxjs/vite-plugin": "^2.0.0-beta.28",
     "@types/chrome": "^0.0.279",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.8"
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   },
   "dependencies": {
     "jszip": "^3.10.1"
