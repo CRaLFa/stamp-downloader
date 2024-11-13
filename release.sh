@@ -5,7 +5,7 @@ set -eu
 main () {
 	(( $# < 1 )) && {
 		echo "Usage: $(basename "$0") <version>" >&2
-		return
+		return 1
 	}
 	cd "$(dirname "$(realpath "$0")")"
 	local version="$1"
